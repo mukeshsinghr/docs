@@ -881,10 +881,14 @@ viewsourceprint?
 Impossible is Impossible
 Imagination is more important than knowledge. Dont try to solve problems by using the same kind of thinking you used when you created them. If you are failing to plan, you are planning to fail.
 
-
+Global Logic 
+------------------
 What is russian-doll-caching ?
 
 what is concerns ?
 
 what is sweepers ?
 
+Difference between Validations and callbacks ?
+
+Difference between update_attribute and update_attributes ?
