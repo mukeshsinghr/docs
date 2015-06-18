@@ -1,0 +1,890 @@
+1. Why Ruby on Rails? 
+Ans: There are lot of advantages of using ruby on rails 
+1. DRY Principal 
+2. Convention over Configuration 
+3. Gems and Plugins 
+4. Scaffolding 
+5. Pure OOP Concept
+6. Rest Support
+7. Rack support
+8. Action Mailer
+9. Rspec support
+10. Rexml Support
+11. etc..
+
+2. Explain about the programming language ruby?
+Ruby is the brain child of a Japanese programmer Matz. He created Ruby. It is a cross platform object oriented language. It helps you in knowing what your code does in your application. With legacy code it gives you the power of administration and organization tasks. Being open source, it did go into great lengths of development.
+
+3. Explain about ruby names? 
+Classes, variables, methods, constants and modules can be referred by ruby names. When you want to distinguish between various names you can specify that by the first character of the name. Some of the names are used as reserve words which should not be used for any other purpose. A name can be lowercase letter, upper case letter, number, or an underscore, make sure that you follow the name by name characters.
+
+Differences between Procs and Lambdas ?
+http://awaxman11.github.io/blog/2013/08/05/what-is-the-difference-between-a-block/
+Before I get into the differences between procs and lambdas, it is important to mention that they are both Proc objects.
+Lambdas check the number of arguments, while procs do not
+ 
+1
+2
+3
+4
+	lam = lambda { |x| puts x }    # creates a lambda that takes 1 argument
+lam.call(2)                    # prints out 2
+lam.call                       # ArgumentError: wrong number of arguments (0 for 1)
+lam.call(1,2,3)                # ArgumentError: wrong number of arguments (3 for 1)
+	 
+In contrast, procs don’t care if they are passed the wrong number of arguments.
+
+ 
+1
+2
+3
+4
+	proc = Proc.new { |x| puts x } # creates a proc that takes 1 argument
+proc.call(2)                   # prints out 2
+proc.call                      # returns nil
+proc.call(1,2,3)               # prints out 1 and forgets about the extra arguments
+	 
+As shown above, procs don’t freak out and raise errors if they are passed the wrong number of arguments. If the proc requires an argument but no argument is passed then the proc returns nil. If too many arguments are passed than it ignores the extra arguments.
+
+Lambdas and procs treat the ‘return’ keyword differently
+‘return’ inside of a lambda triggers the code right outside of the lambda code
+
+ 
+1
+2
+3
+4
+5
+6
+7
+	deflambda_test
+  lam = lambda { return }
+lam.call
+  puts "Hello world"
+end
+
+lambda_test                 # calling lambda_test prints 'Hello World'
+	 
+‘return’ inside of a proc triggers the code outside of the method where the proc is being executed
+ 
+1
+2
+3
+4
+5
+6
+7
+	defproc_test
+proc = Proc.new { return }
+proc.call
+  puts "Hello world"
+end
+
+proc_test                 # calling proc_test prints nothing	 
+
+Difference between Mutable and Immutable Objects?
+Ans: Mutable objects are objects whose state can change. Immutable objects are objects whose state never changes after creation.
+
+Immutable objects have many desirable properties:
+Immutable objects are thread-safe. Threads cannot corrupt what they cannot change.
+Immutable objects make it easier to implement encapsulation. If part of an object's state is stored in an immutable object, then accessor methods can return that object to outside callers, without fear that those callers can change the object's state.
+Immutable objects make good hash keys, since their hash codes cannot change.
+In Ruby, Mutability is a property of an instance, not of an entire class. Any instance can become immutable by callingfreezemethod on it.
+Freezing Objects
+The freeze method in class Object prevents you from changing an object, effectively turning an object into a constant. After we freeze an object, an attempt to modify it results in TypeError. The following programp050xfreeze.rb illustrates this:
+
+str = 'A simple string. '
+str.freeze
+begin
+str << 'An attempt to modify.'
+rescue => err
+puts "#{err.class} #{err}"
+end
+# The output is - TypeError can't modify frozen string
+
+
+
+4. What is the Difference between Symbol and String?
+Ans: Symbol are same like string but both behaviors is different based on object_id, memory and process time (cpu time) Strings are mutable , Symbols are immutable.
+Mutable objects can be changed after assignment while immutable objects can only be overwritten. For example
+
+p "string object jak".object_id #=> 22956070
+p "string object jak".object_id #=> 22956030
+p "string object jak".object_id #=> 22956090
+
+p :symbol_object_jak.object_id #=> 247378
+p :symbol_object_jak.object_id #=> 247378
+p :symbol_object_jak.object_id #=> 247378
+
+p " string object jak ".to_sym.object_id #=> 247518
+p " string object jak ".to_sym.object_id #=> 247518
+p " string object jak ".to_sym.object_id #=> 247518
+
+p :symbol_object_jak.to_s.object_id #=> 22704460
+p :symbol_object_jak.to_s.object_id #=> 22687010
+p :symbol_object_jak.to_s.object_id #=> 21141310
+
+And also it will differ by process time
+
+For example:
+
+Testing two symbol values for equality (or non-equality) is faster than testing two string values for equality,
+
+Note : Each unique string value has an associated symbol
+
+
+5. What is Session and Cookies? 
+Ans: Session: are used to store user information on the server side. 
+cookies: are used to store information on the browser side or we can say client side 
+Session : say session[:user] = â€œarunkumarâ€ it remains when the browser is not closed
+
+6. What is request.xhr?
+Ans: A request.xhr tells the controller that the new Ajax request has come, It always return Boolean values (TRUE or FALSE)
+
+7. What is MVC? and how it Works? 
+Ans: MVC tends for Model-View-Controller, used by many languages like PHP, Perl, Python etc. The flow goes like this: Request first comes to the controller, controller finds and appropriate view and interacts with model, model interacts with your database and send the response to controller then controller based on the response give the output parameter to view, for Example your url is something like this: 
+http://localhost:3000/users/new 
+here users is your controller and new is your method, there must be a file in your views/users folder named new.html.erb, so once the submit button is pressed, User model or whatever defined in the rhtmlform_for syntax, will be called and values will be stored into the database.
+
+8. What things we can define in the model? 
+Ans: There are lot of things you can define in models few are: 
+1. Validations (like validates_presence_of, numeracility_of, format_of etc.) 
+2. Relationships(like has_one, has_many, HABTM etc.) 
+3. Callbacks(like before_save, after_save, before_create etc.) 
+4. Suppose you installed a plugin say validation_group, So you can also define validation_group settings in your model 
+5. ROR Queries in Sql
+6. Active record Associations Relationship
+
+9. What is ORM in Rails? 
+Ans: ORM tends for Object-Relationship-Model, it means that your Classes are mapped to table in the database, and Objects are directly mapped to the rows in the table.
+
+10. How many Types of Associations Relationships does a Model has?
+Ans: When you have more than one model in your rails application, you would need to create connection between those models. You can do this via associations. Active Record supports three types of associations:
+one-to-one : A one-to-one relationship exists when one item has exactly one of another item. For example, a person has exactly one birthday or a dog has exactly one owner.
+one-to-many : A one-to-many relationship exists when a single object can be a member of many other objects. For instance, one subject can have many books.
+many-to-many : A many-to-many relationship exists when the first object is related to one or more of a second object, and the second object is related to one or many of the first object.
+You indicate these associations by adding declarations to your models: has_one, has_many, belongs_to, and has_and_belongs_to_many.
+
+11. Difference between render and redirect?
+Ans:
+
+render example:
+render :partial 
+render :new
+  It will render the template new.rhtml without
+calling or redirecting to the new action.
+
+
+redirect example: 
+redirect_to :controller => â€˜usersâ€™, :action => â€˜newâ€™
+  It forces the clients browser to request the
+new action. 
+
+12. What is the Difference between Static and Dynamic Scaffolding? 
+Ans: The Syntax of Static Scaffold is like this: 
+ruby script/generate scaffold User Comment 
+Where Comment is the model and User is your controller, So all n all static scaffold takes 2 parameter i.e your controller name and model name, whereas in dynamic scaffolding you have to define controller and model one by one.
+
+13. How you run your Rails Application without creating database ?
+Ans: You can run application by uncomment the line in environment.rb
+
+Path =>rootpathconf/ environment.rb
+
+# Skip frameworks you're not going to use (only works if using vendor/rails)
+config.frameworks -= [ :action_web_service, :action_mailer,:active_record ]
+
+14. How to use sqldb or mysql db. without defining it in the database.yml
+Ans: You can use ActiveRecord anywhere!
+
+require 'rubygems'
+
+require 'active_record'
+
+ActiveRecord::Base.establish_connection({
+
+:adapter => 'postgresql',
+
+:user => 'foo',
+
+:password => 'bar',
+
+:database => 'whatever'
+
+})
+
+class Task <>
+
+set_table_tame "a_legacy_thingie"
+
+defutility_methods
+
+update_attribute(:title, "yep")
+
+end
+
+end
+
+Task.find(:first)
+
+Etcetera. Itâ€™s ActiveRecord, you know what to do. Going wild:
+
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3",
+
+:dbfile => ":memory:")
+
+ActiveRecord::Schema.define(:version => 1) do
+
+create_table :posts do |t|
+
+t.string :title
+
+t.text :excerpt, :body
+
+end
+
+end
+
+class Post <>
+
+validates_presence_of :title
+
+end
+
+Post.create(:title => "A new post!")
+
+Post.create(:title => "Another post",
+
+:excerpt => "The excerpt is an excerpt.")
+
+putsPost.count
+
+15. What are helpers and how to use helpers in ROR? 
+Ans: Helpers (â€œviewhelpersâ€) are modules that provide methods which are automatically usable in your view. They provide shortcuts to commonly used display code and a way for you to keep the programming out of your views. The purpose of a helper is to simplify the view. Itâ€™s best if the view file (RHTML/RXML) is short and sweet, so you can see the structure of the output.
+
+16. What is Active Record? 
+Ans: Active Record are like Object Relational Mapping(ORM), where classes are mapped to table , objects are mapped to columns and object attributes are mapped to data in the table
+
+17. Ruby Support Single Inheritance/Multiple Inheritance or Both? 
+Ans: Ruby Supports only Single Inheritance.
+You can achieve Multiple Inheritance through MIXIN concept means you achieve using module by including it with classes.
+
+18. How many types of callbacks available in ROR? 
+Ans:
+
+(-) save
+(-) valid
+(1) before_validation
+(2) before_validation_on_create
+(-) validate
+(-) validate_on_create
+(3) after_validation
+(4) after_validation_on_create
+(5) before_save
+(6) before_create
+(-) create
+(7) after_create
+(8) after_save
+
+What are Filters in rails ?
+Filters are methods that are run before, after or “around” a controller action.
+Filters are inherited, so if you set a filter on ApplicationController, it will be run on every controller in your application.
+Before filters may halt the request cycle. A common before filter is one which requires that a user is logged in for an action to be run. 
+
+19. WHAT CAN RAILS MIGRATION DO?
+ANS:
+create_table(name, options)
+drop_table(name)
+rename_table(old_name, new_name)
+add_column(table_name, column_name, type, options)
+rename_column(table_name, column_name, new_column_name)
+change_column(table_name, column_name, type, options)
+remove_column(table_name, column_name)
+add_index(table_name, column_name, index_type)
+remove_index(table_name, column_name)
+Migrations support all the basic data types: string, text, integer, float, datetime, timestamp, time, date, binary and boolean:
+
+string - is for small data types such as a title.
+text - is for longer pieces of textual data, such as the description.
+integer - is for whole numbers.
+float - is for decimals.
+datetime and timestamp - store the date and time into a column.
+date and time - store either the date only or time only.
+binary - is for storing data such as images, audio, or movies.
+boolean - is for storing true or false values.
+Valid column options are:
+
+limit ( :limit => â€œ50â€ )
+default (:default =>â€œblahâ€ )
+null (:null => false implies NOT NULL)
+
+20. What is the naming conventions for methods that return a boolean result?
+Ans: Methods that return a boolean result are typically named with a ending question mark. For example: def active? return true #just always returning true end
+
+21. How do the following methods differ: @my_string.strip and @my_string.strip! ?
+Ans: The strip! method modifies the variable directly. Calling strip (without the !) returns a copy of the variable with the modifications, the original variable is not altered.
+22. What's the difference in scope for these two variables: @name and @@name?
+
+Ans: @name is an instance variable and @@name is a class variable
+
+23. What is the log that has to seen to check for an error in ruby rails?
+Ans: Rails will report errors from Apache in log/apache.log and errors from the Ruby code in log/development.log. If you're having a problem, do have a look at what these logs are saying. On Unix and Mac OS X you may run tail -f log/development.log in a separate terminal to monitor your application's execution.
+
+24. What is the use of global variable $ in Ruby?
+Ans: A class variable starts with an @@ sign which is immediately followed by upper or lower case letter. You can also put some name characters after the letters which stand to be a pure optional. A class variable can be shared among all the objects of a class. A single copy of a class variable exists for each and every given class. 
+To write a global variable you start the variable with a $ sign which should be followed by a name character. Ruby defines a number of global variables which also include other punctuation characters such as $_ and $-k.
+For example: If you declare one variable as global we can access any where, where as class variable visibility only in the classÃ‚ Example 
+class Test 
+def h 
+Ã‚ $a = 5 
+Ã‚ @b = 4 
+Ã‚ 
+while $a > 0 
+puts $a 
+$a= $a - 1 
+end
+end
+end
+test = Test.new
+test.h
+puts $aÃ‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ # 5 
+puts @bÃ‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ Ã‚ #nil
+
+25. Where does the start_tabnav gets informations for tabs rendering in ruby rail?
+Ans: The main Symbol let the start_tabnav method know to look for a special MainTabnav class where all the magic happens
+
+26. What is the Install rail package?
+Ans: There are several packages that you can download and install. The prebuilt Rails installer called Install rail which currently is only for Windows
+
+28. What is the use of super in ruby rails? 
+Ans: Ruby uses the super keyword to call the superclass (Parent class) implementation of the current method
+
+29. What is the difference between nil and false in ruby? 
+Ans: False is a booleandatatype, Nil is not a data type it have object_id 4 
+
+30. How is class methods defined in Ruby? 
+Ans: A:def self.methodname
+-------- 
+-------- 
+end
+or
+def classname.methodname
+-------- 
+-------- 
+end
+
+31. How is object methods defined in Ruby? 
+Ans:
+classjak
+def method1
+-------- 
+-------- 
+end
+end
+
+obj=jak.new
+It is single object 
+defobj.object_method_one
+-------- 
+-------- 
+end
+obj.Send(object_method_every)
+It will be created every for every object creation 
+
+32. What are the priority of operators available in Ruby ?
+Ans: Something that used in an expression to manipulate objects such as + (plus), - (minus), * (multiply), and / (divide). You can also use operators to do comparisons,such as with <, >, and &&. The priority is based on "BODMAS" 
+
+33. What are the looping structures available in Ruby?
+Ans:for..in
+untill..end
+while..end
+do..end
+Note: You can also use each to iterate a array as loop not exactly like loop
+
+
+34. What are the object-oriented programming features supported by Ruby and how multiple inheritance supported in ?
+Ans:Classes,Objects,Inheritance,Singletonmethods,polymorphism(accomplished by over riding and overloading) are some oo concepts supported by ruby. Multiple inheritance supported using Mixin concept. 
+
+35. What is the scope of a local variable in Ruby and define it scope ?
+Ans: A new scope for a local variable is introduced in the toplevel, a class (module) definition, a method defintion. In a procedure block a new scope is introduced but you can access to a local variable outside the block. 
+The scope in a block is special because a local variable should be localized in Thread and Proc objects.
+
+36. How is an enumerator iterator handled in Ruby?
+Ans: Iterator is handled using keyword 'each' in ruby. 
+For example 
+number=[1,2,3] 
+then we can use iterator as 
+number.each do |i| 
+putsi
+end
+Above prints the values of an array $no which is accomplished using iterator.
+
+37. How is visibility of methods changed in Ruby (Encapsulation)?
+Ans: By applying the access modifier : Public , Private and Protected access Modifier
+
+38. What is the use of load, require, auto_load,require_relative in Ruby?
+Ans: A method that loads and processes the Ruby code from a separate file, including whatever classes, modules, methods, and constants are in that file into the current scope. load is similar, but rather than performing the inclusion operation once, it reprocesses the code every time load is called.
+auto_load - Whenever the interpreter call the method that time only it will initiate the method in that file.
+require_relative - It it to load local folder files. 
+
+More Questions:
+
+1. Explain choose_weighted method with example
+2. What is GIL in ruby ?
+3. Is variable is aobject ?
+Ans : Variable is not an object 
+4. List of protocols supported by ruby ?
+5. Explain Virtual attribute ?
+6. How to validate and modify attribute value ?
+7. How to serialize data with YAML ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q17. Suppose in one of my method I am updating the attributes of table, in my model I have defined after_create do X, and after_save do Y. Which method will be called?
+
+Ruby Interview Questions :
+
+Q18. How to use two database into a Single Application?
+Sol. http://magicmodels.rubyforge.org/magic_multi_connections/, According to this link :ActiveRecord models are allowed one connection to a database at a time, per class. Ruby on Rails sets up the default connection based on your database.yml configuration to automatically select development, test or production.
+But, what if you want to access two or more databases â€“ have 2+ connections open â€“ at the same time. ActiveRecord requires that you subclass ActiveRecord::Base.
+That prevents you doing migrations from one database to another. It prevents you using one set of model classes on two or more databases with the same schema.
+Magic Multi-Connections allows you to write your models once, and use them for multiple Rails databases at the same time. How? Using magical namespacing.
+
+To do this :
+[A] sudo gem install magic_multi_connections
+[B] require â€˜magic_multi_connectionsâ€™
+Add the following to the bottom of your environment.rb file
+You can also find examples on this link : http://magicmodels.rubyforge.org/magic_multi_connections/
+
+Q19. What is the Notation used for denoting class variables in Ruby?
+
+Q20. What is the use of Destructive Method?
+
+Q21. What is the use of load and require in Ruby?
+
+Q22. What is the use of Global Variable in Ruby?
+
+Q23. How does nil and false differ?
+
+Q24. How is visibility of methods change in Ruby?
+
+Q25. What is a Class Instance Variable
+
+Q26. What are the rules and conventions to be followed in Ruby for naming a method?
+
+Q27. What is the use of Super?
+
+Q28. How is class method defined in Ruby?
+
+Q29. What are the Operators available in Ruby?
+
+Q30. What are the looping structure available in Ruby?
+
+Q31. What is the scope of local variable?
+
+Q32. What are the OOP supported by Ruby?
+
+Q33. If Ruby over PHP, Why?
+
+Q34. Garbage collection in Ruby?
+
+Q35. Environment Variables in Ruby?
+
+Q36. What are Float, Dig and Max?
+
+Q37. What is Ruby Code blocks?
+
+Q38. What kind of conditions ruby support?
+
+Q39. Difference between puts and print
+
+Some More Questions are here:
+Q40. What is Agile methodology? What are their Processes?
+
+Q41. Is there any technology apart from agile which we can use?
+
+Q42. What are the servers supported by ruby on rails application?
+
+Q43. What is new in Rails 3.0?
+
+Q44. What is Meta-programming? How you are using it inside your rails application?
+
+Q45. What is has_many?
+Ans. It is a way of defining relationships among models. Correct, and Do you guys really know has_many is also an example of Meta-programming? Wondering, How?
+
+More Questions and Answers of this will be published very soon  So stay in touch.. I will keep you updating..if you have some questions please replyâ€¦
+
+
+Q) Adavantage of ROR?
+
+1) Rapid development of the application.
+2)Convention Over Configuration: Less code, less repetition.
+3) Has build commands like 'rake' which make development simple and fast
+4) Has a support for REST services which are again simple and fast.
+
+Q) What is ActiveRecord Migration?
+
+Active Record Design Pattern:
+
+Active record is an approach to accessing data in a database. A database object or view is wrapped into a class; thus an object instance is tied to a single row in the table. After creation of an object, a new row is added to the table upon save. Any object loaded gets its information from the database; when an object is updated, the corresponding row in the table is also updated. The wrapper class implements accessor methods or properties for each column in the table or view.
+
+Migrations can manage the evolution of a schema used by several physical databases. Its a solution to the common problem of adding a field to make a new feature work in your local database, but being unsure of how to push that change to other developers and to the production server. 
+
+http://api.rubyonrails.org/classes/ActiveRecord/Migration.html
+
+
+
+Q) What is the Notation used for denoting class variables in Ruby?
+1) a constant begins with an uppercase letter and it should not be defined inside a method
+2) a local must begin with a lowercase letter or the _ underscore sign
+3) a global begins with the $ sign; an uninitialized global has the value of "nil" and also produces a warning. can be reffered anywhere in the program
+4) instances begin with the @ sign; an uninitialized instance has the value of "nil" and also produces a warning
+5) a class variable begins with double @@ and have to be first initialized before being used in a method definition, otherwise you will get an error if you refer to it without initializin
+http://www.techotopia.com/index.php/Ruby_Variable_Scope
+
+Q) What is the use of Destructive Method?
+In ruby, we conventionally attach '!' or '?' to the end of certain method names. The exclamation point (!, sometimes pronounced aloud as "bang!") indicates something potentially destructive, that is to say, something that can change the value of what it touches. chop! affects a string directly, but chop with no exclamation point works on a copy. Here is an illustration of the difference.
+s1 = "forth"
+s1.chop! 
+s2=s1.chop
+Q4. What is the use of load and require in Ruby?
+require 'rake'
+
+will cause ruby to look for one of the files rake.rb or rake.so in the
+directories listed in $:. The script in bin is called simply rake, not
+rake.rb, and so require doesn't even consider it.
+
+load, instead, interpret its argument in a different way: it considers it tobe the whole basename of the file and doesn't try to add any extension to it.So, the lineload 'rake'will make ruby look for a file called 'rake' (not rake.rb as before) in thedirectories listed in $:. This time bin/rake has the correct name and is
+loaded.
+
+Q13. What are the looping structure available in Ruby?
+while end , unless end
+
+Q15. What are the OOP supported by Ruby?
+inheritance, encapsulation and abstraction
+
+Q17. Garbage collection in Ruby?
+slow, but improving
+
+Q18. Environment Variables in Ruby?
+Following are some of the environment variables used to control the behavior programming of ruby. While programming ENV object lists some of the current variables. RUBYLIB path searches for libraries. Make sure that you separate each path with colons. RUBYOPT passes command line options to Ruby interpreter. There are many more which can be obtained by searching the huge pool of library.
+
+Q22. Difference between puts and print
+puts a new line char,print is normal
+
+Q. Modules vs Classes.
+
+Use of modules:
+
+a) Functionality which is related to a class but can be also used somewhere can be put in a module.
+    Like constants.
+
+b) Mixin: A class can use the methods of a module. But this is not a "IS A" relation but 'HAS A" relationship.
+The class can have a 'multiple inheritance' like this.
+
+Modules:
+
+http://www.rubyfleebie.com/an-introduction-to-modules-part-1/
+
+Ruby Modules are similar to classes in that they hold a collection of methods, constants, and other module and class definitions. Modules are defined much like classes are, but themodule keyword is used in place of the class keyword. Unlike classes, you cannot create objects based on modules nor can you subclass them; instead, you specify that you want the functionality of a particular module to be added to the functionality of a class, or of a specific object. Modules stand alone; there is no "module hierarchy" of inheritance. Modules is a good place to collect all your constants in a central location.
+
+namespaces
+sharefunctionalitiy
+
+1) Explain about the programming language ruby?
+Ruby is the brain child of a Japanese programmer Matz. He created Ruby. It is a cross platform object oriented language. It helps you in knowing what your code does in your application. With legacy code it gives you the power of administration and organization tasks. Being open source, it did go into great lengths of development.
+
+2) Explain about class libraries in ruby?
+Ruby has a strong set of class libraries and it covers from a variety of domains such as thread programming, domains and data types. Also ruby is a new language and it also has additional libraries coming every day. Many of the new languages which do exist have huge libraries because of their age.
+3) Explain about portability?
+Ruby language can be ported to many platforms. Ruby programs can be ported to many platforms without any modification to the source code. This feature made the language very useful and highly used by many programmers worldwide. Some of the platforms used are DOS, UNIX, WINDOWS, etc.
+4) Explain about garbage collection feature of ruby?
+Ruby is an object oriented language and every object oriented language tends to allocate many objects during execution of the program. Ruby deletes unallocated and unused objects automatically. This feature can be controlled by applying proper syntax and program through ruby.
+5) Explain about the command line options?
+Ruby`s language is executed from the command line like most of the scripting languages. Programming and behavior language environment can be controlled from the interpreter itself. Some of the commands which are used are as follows â€“d, -h, -e prog, -v, -T, -r lib, etc.
+6) Explain about environment variables present in ruby?
+Following are some of the environment variables used to control the behavior programming of ruby. While programming ENV object lists some of the current variables. RUBYLIB path searches for libraries. Make sure that you separate each path with colons. RUBYOPT passes command line options to Ruby interpreter. There are many more which can be obtained by searching the huge pool of library.
+
+RUBYLIB
+RUBYOPT
+
+7) Explain about operators in Ruby?
+Like all the modern languages Ruby supports many different operators to its credit. Most of the operators in Ruby are in fact methods due to the object oriented nature of the language. This feature gives Ruby an edge over its competitors. Semantics of these operators can be changed due to the object oriented nature of the language.
+8) Explain about the defined operator?
+Define operator defines whether a passed expression is defined or not. If the expression is defined it returns the description string or null if the expression is not defined. If a variable is defined it gets initialized. If method_call is defined as true then method also gets defined. This is also the same case with super and yield.
+9) Explain about methods?
+Methods in ruby basically perform two functions, named operation and the code present in the class which does a specific function. In Ruby all your algorithms live in methods which inturn are present on objects. Ruby does not have any provision for functions. Code present in Ruby is always a method of some object. Behind the scenes ruby gives you the flexibility to work with methods as functions if you are considering working with other languages.
+
+10) Explain about normal method class?
+This function calls a method and it can take any number of arguments and expr. Make sure that you put an asterisk or an ampersand before the expression. Last expr argument can be declared with a hash without any braces. If you want to increase the size of the array value then make sure that you put an asterisk before expression. â€œ::â€ can be used to separate the class from methods.
+11) Explain about ruby names?
+Classes, variables, methods, constants and modules can be referred by ruby names. When you want to distinguish between various names you can specify that by the first character of the name. Some of the names are used as reserve words which should not be used for any other purpose. A name can be lowercase letter, upper case letter, number, or an underscore, make sure that you follow the name by name characters.
+12) Explain about variables?
+There are four different types of variables they are local, instance, global, and class. Variables can be used in the program without any declaration and they can contain data of any type. A local variable contains lower case characters followed by name characters. Instance variable starts with a @ sign followed by name characters.
+13) Explain about Class variable and global variable?
+A class variable starts with an @@ sign which is immediately followed by upper or lower case letter. You can also put some name characters after the letters which stand to be a pure optional. A class variable can be shared among all the objects of a class. A single copy of a class variable exists for each and every given class.
+To write a global variable you start the variable with a $ sign which should be followed by a name character. Ruby defines a number of global variables which also include other punctuation characters such as $_ and $-k.
+14) How does ruby deal with extremely large numbers?
+Unlike other programming languages ruby deals with extremely large numbers it doesnâ€™t have any barriers. There is no limit on the extent of limit of number usage. Ruby performs this function with two different classes they are fixnum and bignum. Fixnum represents easily managed small numbers and bignum represents big numbers. Ruby entirely handles the functioning of these two classes which leaves a programmer to concentrate on his arithmetic operations.
+15) Explain about Float, Dig and Max?
+Float class is used whenever the function changes constantly. It acts as a sub class of numeric. They represent real characters by making use of the native architecture of the double precision floating point.
+Max is used whenever there is a huge need of Float.
+Dig is used whenever you want to represent a float in decimal digits.
+16) Explain about interpolation?
+Interpolation is a very important process in Ruby. Interpolation is the process of inserting a string into a literal. There is only one way in which you can interpolate a string into a literal by placing a Hash (#) within {} open and close brackets. This refers to a new name to by referring to the copy of the original method.
+17) Explain about ruby code blocks?
+Ruby code blocks form an important part of ruby and are very fun to use. With the help of this feature you can place your code between do-end and you can associate them with method invocations and you can get an impression that they are like parameters. They may appear near to a source of the code and adjacent to a method call. The code is not executed during the program execution but it is executed when the context of its appearance is met or when it enters a method.
+
+
+Q) How do you comment out a block of code?
+
+A) Use =begin and =end.
+
+=begin
+defmy_commented_out_method
+end
+=end
+
+You could use successive # signs, but that's just tedious:
+#
+# def my commented_out_method
+# end
+#
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q) How do you write to STDOUT in Ruby?
+
+A) Actually two methods are available:
+puts writes with a newline
+print writes without a newline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q) What's the difference in scope for these two variables: @name and @@name?
+
+A) @name is an instance variable and @@name is a class variable
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q) What two delimiters are used for blocks?
+
+A) Curly braces {...} and "do"..."end"
+
+Bonus: coding convention is to use curly braces if the code will fit on one line and "do"..."end" syntax if the block contains multiple lines.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q) How do you capitalize all characters in a string?
+
+A) "this is my string".upcase
+
+If the string is in a variable:
+@my_string.upcase
+
+Note: The method: upcase! is another alternative. See next question regarding methods that end with an exclamation.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q) How do the following methods differ: @my_string.strip and @my_string.strip! ?
+
+A) The strip! method modifies the variable directly. Calling strip (without the !) returns a copy of the variable with the modifications, the original variable is not altered.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q) What is the naming conventions for methods that return a boolean result?
+
+A) Methods that return a boolean result are typically named with a ending question mark.
+
+For example:
+def active?
+return true #just always returning true
+end
+
+Q) Rake and Ruby Gems
+
+Rake: Rake is a Ruby version of Make, which is a software building tool. When you want to compile software easily, from the command line, on a UNIX based platform, you will run make, nmake or an equivalent to build and run the executable of the code. Rake is simply a way of executing Ruby to run actions, stemming from the concept of Make. 
+
+http://jamierumbelow.net/2009/04/03/welcome-to-rake/
+
+Rake and RubyGems
+
+Well, for two big reasons:
+Task creation - With every large application you almost always end up writing scripts that you can run from the command line. You might want to clear the cache, run a maintenance task, or migrate the database. Rather than creating 10 separate shell scripts (or one big complex one) you can create a single "Makefile" in which you can organize things by task. Tasks then can be run by typing something like "make stupid" (which runs the stupid task).
+Dependancy Task Tracking - When you start writing a library of maintenance tasks, you start to notice that some tasks might partially repeat themselves. For instance, the task "migrate" and the task "schema:dump" both require getting a connection to the database. I could create a task called "connect_to_database", and set both "migrate" and "schema:dump" to depend on "connect_to_database". Then the next time I run "migrate", "connect_to_database" is run before the "migrate" task is run.
+
+rubygems is used to create and load packagesinst
+
+http://www.troubleshooters.com/codecorn/ruby/database/index.htm
+
+while end , untill end and for end
+
+
+
+Ruby Singleton Methods and Singleton Classes
+http://www.spritle.com/blogs/2011/02/22/ruby-singleton-methods-and-singleton-classes/
+What is a Singleton method ?
+A method which belongs to a single object rather than to an entire class and other objects.
+Instance Methods
+Difference between class and Instance methods ?
+http://railstips.org/blog/archives/2009/05/11/class-and-instance-methods-in-ruby/
+Enough about class methods, lets move on. Instance methods are a bit more simple. Here are a few common ways that instance methods are defined.
+# Way 1
+class Foo
+defbaz
+puts'instance method'
+end
+end
+
+Foo.new.baz# "instance method"
+
+# Way 2
+class Foo
+attr_accessor :baz
+end
+
+foo = Foo.new
+foo.baz = 'instance method'
+putsfoo.baz
+
+# Way 3
+class Foo; end
+
+foo = Foo.new
+deffoo.bar
+puts'instance method'
+end
+
+Foo.new.baz# "instance method"
+The key difference is instance methods only work with an instance and thus you have to create a new instance to use them (Foo.new). Again, there are more ways to define instance methods than this, especially if you look into meta programming.
+So what are some examples uses of instance methods in Rails, to give you a better idea? Ever do a find in a destroy action and then call destroy on the found instance? destroy is an instance method.
+
+Before explaining about singleton methods I would like to give a small introduction about class methods.
+What is a class method ?
+When you write your own class methods you do so by prefacing the method name with the name of the class.
+There are three ways to write a class method.
+The first way is to preface the class name with the method name(ClassMethods.method1).
+The second way is to preface the self keyword with the method name(self.method2).
+The third way is writing a sepetare class inside the class which contains the methods (class << self).
+viewsourceprint?
+01.class ClassMethods
+02. 
+03.def ClassMethods.method1
+04."Hi I am class method prefaced with classname"
+05.end
+06. 
+07.def self.method2
+08."Hi I am class method prefaced with self keyword "
+09.end
+10. 
+11.class << self
+12. 
+13.def method3
+14."Hi I am class method inside class withich extends self"
+15.end
+16. 
+17.end
+18. 
+19.end
+viewsourceprint?
+1.p ClassMethods.method1 #  "Hi I am class method prefaced with classname"
+2.p ClassMethods.method2 #  "Hi I am class method prefaced with self keyword"
+3.p ClassMethods.method3 #  "Hi I am class method inside a self class"
+You can use the similar syntax when creating singleton methods for specific objects.
+This time you prepend the method name with the name of the object:
+viewsourceprint?
+1.firstObj = ClassMethods.new
+2.secondObj = ClassMethods.new
+3. 
+4.def firstObj.singletonMethod
+5.p "Hi am a singlton method available only for firstObj"
+6.end
+
+
+Lets try to call the “singletonMethod” with the firstObj.
+viewsourceprint?
+1.firstObj.singletonMethod # "Hi am a singlton method available only for firstObj"
+Now try calling the method with secondObj
+viewsourceprint?
+1.secondObj.singletonMethod #undefined method `singletonMethod' for #<ClassMethods:0x32754d8> (NoMethodError)
+We get an undefined method error.
+So this “singletonMethod” belongs only to the firstObj object and won’t be available for other objects of this class.
+If you try to make the secondObj.singletonMethod Ruby will inform you that singletonMethod is an undefined method.
+If you like to find all the singleton methods for a specific object, you can say objectname.singleton_methods
+In our case
+viewsourceprint?
+1.firstObj.singleton_methods => ["singletonMethod"]
+2.secondObj.singleton_methods => []
+To avoid throwing undefined method error when you try to access a singleton method with some other object
+viewsourceprint?
+1.if secondObj.singleton_methods.include?("singletonMethod")
+2.secondObj.singletonMethod
+3.end
+An alternative way of checking is
+viewsourceprint?
+1.if secondObj.singleton_methods.include?( :singletonMethod )
+2.secondObj.singletonMethod
+3.end
+
+Singleton classes
+A singleton class is a class which defines onto single object.
+In our above example we have two objects firstObj and secondObj.
+We can create a separate class for the secondObj instance and that is called as a singleton class.
+So as per the definition we created a class for a single object.
+viewsourceprint?
+1.class <<secondObj
+2. 
+3.def method4
+4.p "Hi am a singlton method available only for secondObj"
+5.end
+6. 
+7.end
+When you see a class definition with the class keyword followed by two less than symbols that is a Singleton class opened for the object.
+In our ClassMethods class we had something like class << self which is also a sing
+leton class.
+In Ruby a class itself is an instance of the Ruby class
+Let's try something like this
+viewsourceprint?
+1.ClassMethods.class # Class
+
+
+
+
+Impossible is Impossible
+Imagination is more important than knowledge. Dont try to solve problems by using the same kind of thinking you used when you created them. If you are failing to plan, you are planning to fail.
+
+
+What is russian-doll-caching ?
+
+what is concerns ?
+
+what is sweepers ?
+
